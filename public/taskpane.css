@@ -1,0 +1,19 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1f1f1f;
+  --muted: #6b6b6b;
+  --accent: #2563eb;
+  --border: #e5e5e5;
+  --radius: 6px;
+  --gap: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: var(--gap);
+  font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+h1 { font-size: 16px; margin: 0 0 8px; }
+#status { color: var(--muted); }
