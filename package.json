@@ -1,0 +1,18 @@
+{
+  "name": "outlook-reply-addin",
+  "version": "0.1.0",
+  "description": "Personal Outlook add-in that drafts email replies in Ali's voice using Gemini",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/",
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  }
+}
