@@ -4,4 +4,5 @@ node_modules/
 .vercel/
 .DS_Store
 *.log
-.vercel
+source-icon.png.png
+source-icon.svg

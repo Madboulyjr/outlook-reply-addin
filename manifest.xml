@@ -7,7 +7,7 @@
   xsi:type="MailApp">
 
   <Id>e4b1a9c0-1234-4ab1-9abc-000000000001</Id>
-  <Version>1.0.0.3</Version>
+  <Version>1.0.0.4</Version>
   <ProviderName>Ali Madbouly</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="AI Email Assistant" />
