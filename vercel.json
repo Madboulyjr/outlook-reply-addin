@@ -5,8 +5,7 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "ALLOW-FROM https://outlook.office.com" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors https://outlook.office.com https://*.officeapps.live.com" }
+        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://outlook.office.com https://outlook.office365.com https://outlook.live.com https://*.outlook.com https://*.officeapps.live.com https://outlook-sdf.office.com" }
       ]
     }
   ],
