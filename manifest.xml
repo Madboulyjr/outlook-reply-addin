@@ -7,8 +7,8 @@
   xsi:type="MailApp">
 
   <Id>e4b1a9c0-1234-4ab1-9abc-000000000001</Id>
-  <Version>1.0.0.4</Version>
-  <ProviderName>Ali Madbouly</ProviderName>
+  <Version>1.0.0.5</Version>
+  <ProviderName>Mad Studio</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="AI Email Assistant" />
   <Description DefaultValue="Drafts email replies and new emails in your voice using Gemini." />

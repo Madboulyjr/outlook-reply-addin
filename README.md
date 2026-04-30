@@ -2,6 +2,8 @@
 
 Personal Outlook add-in that drafts email replies and new emails in Ali Madbouly's voice using Google Gemini 2.5 Flash.
 
+Made by [Mad Studio](https://beingmad.co).
+
 ## Local development
 
 1. Clone: `git clone https://github.com/Madboulyjr/outlook-reply-addin.git && cd outlook-reply-addin`
@@ -40,4 +42,4 @@ vercel --prod
 
 ## License
 
-Private — personal use only.
+Private — personal use only. © Mad Studio.

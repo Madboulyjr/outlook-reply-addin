@@ -113,6 +113,19 @@ button.link {
 }
 
 footer { margin-top: 16px; text-align: center; }
+.credit {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.credit a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+}
+.credit a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 @media (max-width: 320px) {
   body { padding: 6px; font-size: 12px; }
