@@ -9,8 +9,119 @@
 </head>
 <body>
   <main id="root">
-    <h1>AI Email Assistant</h1>
-    <p id="status">Loading…</p>
+    <header>
+      <h1>AI Email Assistant</h1>
+      <div class="mode-tabs" role="tablist">
+        <button class="mode-tab active" data-mode="reply" role="tab" aria-selected="true">📨 Reply</button>
+        <button class="mode-tab" data-mode="compose" role="tab" aria-selected="false">✏️ Compose</button>
+      </div>
+    </header>
+
+    <section id="reply-section" class="mode-section">
+      <div class="email-info" id="email-info">
+        <div class="muted">Reading current email…</div>
+      </div>
+
+      <label>
+        <span>Notes (optional)</span>
+        <textarea id="notes" rows="3" placeholder="What do you want to say?"></textarea>
+      </label>
+    </section>
+
+    <section id="compose-section" class="mode-section hidden">
+      <label>
+        <span>To</span>
+        <input id="compose-to" type="text" placeholder="Recipient name or email" />
+      </label>
+      <label>
+        <span>About</span>
+        <input id="compose-topic" type="text" placeholder="Short topic line" />
+      </label>
+      <label>
+        <span>Notes</span>
+        <textarea id="compose-notes" rows="3" placeholder="What do you want to say?"></textarea>
+      </label>
+    </section>
+
+    <section class="controls">
+      <div class="control-row">
+        <span class="control-label">Tone</span>
+        <div class="btn-group" data-control="tone">
+          <button data-value="very_formal">Formal</button>
+          <button data-value="professional" class="active">Pro</button>
+          <button data-value="casual">Casual</button>
+          <button data-value="very_casual">Chill</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Length</span>
+        <div class="btn-group" data-control="length">
+          <button data-value="short">Short</button>
+          <button data-value="medium" class="active">Med</button>
+          <button data-value="detailed">Detailed</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Lang</span>
+        <div class="btn-group" data-control="language">
+          <button data-value="english">EN</button>
+          <button data-value="arabic">AR</button>
+          <button data-value="auto" class="active">Auto</button>
+        </div>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" id="pro-quality" />
+        <span>Use Pro Quality (high-stakes)</span>
+      </label>
+    </section>
+
+    <button id="generate" class="primary">✨ Generate</button>
+
+    <section id="draft-section" class="hidden">
+      <h2 id="draft-subject-row" class="hidden"><span class="muted">Subject:</span> <span id="draft-subject"></span></h2>
+      <pre id="draft" class="draft"></pre>
+      <div id="missing-info" class="missing hidden"></div>
+
+      <div class="refine">
+        <div class="refine-label">Refine:</div>
+        <div class="btn-group wrap">
+          <button class="refine-btn" data-instruction="make it more formal">More formal</button>
+          <button class="refine-btn" data-instruction="make it friendlier and warmer">Friendlier</button>
+          <button class="refine-btn" data-instruction="make it shorter and more direct">Shorter</button>
+          <button class="refine-btn" data-instruction="add more detail and context">Longer</button>
+          <button class="refine-btn" data-instruction="make it more polite">More polite</button>
+          <button class="refine-btn" data-instruction="make it more direct, even firm">More aggressive</button>
+          <button class="refine-btn" data-instruction="make it sound less corporate, more human">Less corporate</button>
+          <button class="refine-btn" data-instruction="add a touch of light humor">Add humor</button>
+          <button class="refine-btn" data-instruction="translate the entire reply to Arabic">→ Arabic</button>
+          <button class="refine-btn" data-instruction="translate the entire reply to English">→ English</button>
+        </div>
+        <div class="refine-custom">
+          <input id="custom-refine" type="text" placeholder="Custom: tell me what to change" />
+          <button id="custom-refine-go">Apply</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copy">📋 Copy</button>
+        <button id="insert" class="primary">📨 Insert</button>
+      </div>
+    </section>
+
+    <p id="error" class="error hidden"></p>
+    <p id="status" class="muted"></p>
+
+    <footer>
+      <button id="settings-toggle" class="link">⚙️ Settings</button>
+    </footer>
+
+    <section id="settings-panel" class="hidden">
+      <label>
+        <span>Custom voice rules (added to system prompt)</span>
+        <textarea id="custom-rules" rows="4" placeholder="e.g. 'Always mention next steps' or 'Avoid the word synergy'"></textarea>
+      </label>
+      <button id="settings-save">Save</button>
+    </section>
   </main>
   <script type="module" src="taskpane.js"></script>
 </body>
