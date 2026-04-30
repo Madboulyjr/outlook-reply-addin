@@ -7,6 +7,12 @@
       "headers": [
         { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://outlook.office.com https://outlook.office365.com https://outlook.live.com https://*.outlook.com https://*.officeapps.live.com https://outlook-sdf.office.com" }
       ]
+    },
+    {
+      "source": "/(taskpane|commands)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, max-age=0" }
+      ]
     }
   ],
   "functions": {
