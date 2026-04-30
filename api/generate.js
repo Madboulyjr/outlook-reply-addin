@@ -51,10 +51,16 @@ export default async function handler(req, res) {
   if (!VALID_LANGUAGES.has(body.language)) {
     return res.status(400).json({ ok: false, error: 'invalid_language' });
   }
+  if (body.mode === 'reply' && (!body.reply || typeof body.reply !== 'object')) {
+    return res.status(400).json({ ok: false, error: 'missing_reply_payload' });
+  }
+  if (body.mode === 'compose' && (!body.compose || typeof body.compose !== 'object')) {
+    return res.status(400).json({ ok: false, error: 'missing_compose_payload' });
+  }
 
   try {
     const prompt = buildPrompt(body);
-    const { text, model } = await callGemini({ prompt, useProQuality: !!body.useProQuality });
+    const { text, model } = await callGemini({ prompt, useProQuality: body.useProQuality === true });
 
     if (body.mode === 'compose') {
       const parsed = parseComposeOutput(text);

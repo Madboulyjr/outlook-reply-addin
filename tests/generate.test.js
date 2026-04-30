@@ -74,3 +74,48 @@ test('rejects missing mode', async () => {
   assert.equal(ctx.statusCode, 400);
   assert.equal(ctx.payload.ok, false);
 });
+
+test('rejects reply mode without reply payload', async () => {
+  const ctx = makeReqRes({
+    mode: 'reply',
+    tone: 'professional',
+    length: 'medium',
+    language: 'auto',
+    // reply field missing
+  });
+  await handler(ctx.req, ctx.res);
+  assert.equal(ctx.statusCode, 400);
+  assert.equal(ctx.payload.ok, false);
+  assert.equal(ctx.payload.error, 'missing_reply_payload');
+});
+
+test('rejects compose mode without compose payload', async () => {
+  const ctx = makeReqRes({
+    mode: 'compose',
+    tone: 'professional',
+    length: 'medium',
+    language: 'english',
+    // compose field missing
+  });
+  await handler(ctx.req, ctx.res);
+  assert.equal(ctx.statusCode, 400);
+  assert.equal(ctx.payload.ok, false);
+  assert.equal(ctx.payload.error, 'missing_compose_payload');
+});
+
+test('useProQuality only accepts strict true', async () => {
+  // String "true" should NOT trigger pro quality
+  const ctx = makeReqRes({
+    mode: 'reply',
+    tone: 'professional',
+    length: 'medium',
+    language: 'auto',
+    useProQuality: 'true',  // string, not boolean
+    reply: { senderName: 'X', senderEmail: 'x@x.com', subject: 's', body: 'b', notes: '' },
+  });
+  await handler(ctx.req, ctx.res);
+  // We can't directly observe the model selection without more mocking,
+  // but the request should still succeed with 200 (and use Flash).
+  assert.equal(ctx.statusCode, 200);
+  assert.equal(ctx.payload.model, 'gemini-2.5-flash');
+});
