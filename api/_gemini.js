@@ -77,6 +77,14 @@ export function buildPrompt(payload) {
   return lines.join('\n');
 }
 
+function isTransient(err) {
+  const msg = err?.message || '';
+  return /\b(503|502|504|429)\b/.test(msg) ||
+         /Service Unavailable|high demand|overloaded|temporarily unavailable/i.test(msg);
+}
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function callGemini({ prompt, useProQuality = false, apiKey }) {
   const key = apiKey || process.env.GEMINI_API_KEY;
   if (!key) throw new Error('GEMINI_API_KEY not set');
@@ -86,7 +94,21 @@ export async function callGemini({ prompt, useProQuality = false, apiKey }) {
     model: modelName,
     systemInstruction: SYSTEM_PROMPT,
   });
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
-  return { text, model: modelName };
+
+  // Retry transient errors (503/502/504/quota-rate) with exponential backoff.
+  // Max 3 attempts: immediate, +1.5s, +4.5s. Total worst case ~6s + network.
+  const delays = [0, 1500, 4500];
+  let lastErr;
+  for (const delay of delays) {
+    if (delay) await sleep(delay);
+    try {
+      const result = await model.generateContent(prompt);
+      const text = result.response.text();
+      return { text, model: modelName };
+    } catch (err) {
+      lastErr = err;
+      if (!isTransient(err)) throw err;
+    }
+  }
+  throw lastErr;
 }
