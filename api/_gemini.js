@@ -89,7 +89,9 @@ export async function callGemini({ prompt, useProQuality = false, apiKey }) {
   const key = apiKey || process.env.GEMINI_API_KEY;
   if (!key) throw new Error('GEMINI_API_KEY not set');
   const genAI = new GoogleGenerativeAI(key);
-  const modelName = useProQuality ? 'gemini-2.5-pro' : 'gemini-2.5-flash';
+  // Use -latest aliases — Google auto-routes to whichever current model has
+  // capacity. Avoids 503s when a specific version (e.g. 2.5) is overloaded.
+  const modelName = useProQuality ? 'gemini-pro-latest' : 'gemini-flash-latest';
   const model = genAI.getGenerativeModel({
     model: modelName,
     systemInstruction: SYSTEM_PROMPT,
