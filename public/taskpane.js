@@ -159,7 +159,15 @@ async function refine(instruction) {
 
 function friendlyError(err) {
   const msg = err.message || String(err);
-  if (msg.includes('quota') || msg.includes('429')) return 'Daily free quota hit. Try again tomorrow or enable Pro Quality.';
+  if (msg.includes('quota') || msg.includes('429')) {
+    return 'Free quota hit (20/day on Flash). Try again tomorrow, toggle Pro Quality, or enable billing on your Google AI key.';
+  }
+  if (msg.includes('503') || msg.includes('Service Unavailable') || msg.includes('high demand')) {
+    return 'Google servers are busy right now. Wait 1-2 min and try again — usually transient.';
+  }
+  if (msg.includes('500')) {
+    return 'Server error. Check Vercel logs or try again.';
+  }
   if (msg.includes('Failed to fetch')) return 'Network error — check your connection.';
   return `Generation failed: ${msg}`;
 }
